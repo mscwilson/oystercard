@@ -5,6 +5,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @in_use = false
   end
 
   def top_up(amount)
@@ -17,8 +18,23 @@ class Oystercard
     self.balance -= amount
   end
 
+  def touch_in
+    self.in_use = true
+  end
+
+  def touch_out
+    # self.in_use = false
+  end
+
+  def in_journey?
+    in_use
+  end
+
+
 private #-----------------------------
 
   attr_writer :balance
+  attr_accessor :in_use
+
 
 end

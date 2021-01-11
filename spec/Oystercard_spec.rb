@@ -36,6 +36,25 @@ describe Oystercard do
     end
   end
 
+  describe "#touch_in" do
+
+    it { is_expected.to respond_to :touch_in }
+
+    it "sets in_journey? to be true" do
+      subject.touch_in
+      expect(subject.in_journey?).to be true
+    end
+
+  end
+
+  describe "#touch_out" do
+    it { is_expected.to respond_to :touch_out }
+  end
+
+  describe "#in_journey?" do
+
+    it { is_expected.to respond_to :in_journey? }
+  end
 
   end
 
