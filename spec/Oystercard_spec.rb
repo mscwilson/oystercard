@@ -19,11 +19,20 @@ describe Oystercard do
     it "increases balance" do
       expect{ subject.top_up(10) }.to change{ subject.balance }.by 10
     end
+  end
 
-    it "raises error if balance limit is reached" do
-      subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      expect { subject.top_up(1) }.to raise_error "Unable to top up as it would exceed balance limit (£#{Oystercard::MAXIMUM_BALANCE})"
-    end
+    # before(:context) { subject.top_up(Oystercard::MAXIMUM_BALANCE) }
+
+      describe "card with maximum balance" do
+
+      it "raises error if balance limit is reached" do
+        subject.top_up(Oystercard::MAXIMUM_BALANCE)
+        expect { subject.top_up(1) }.to raise_error "Unable to top up as it would exceed balance limit (£#{Oystercard::MAXIMUM_BALANCE})"
+      end
+     end
+
+
+
 
   describe '#deduct' do
 
@@ -42,20 +51,28 @@ describe Oystercard do
 
     it "sets in_journey? to be true" do
       subject.touch_in
-      expect(subject.in_journey?).to be true
+      expect(subject).to be_in_journey
     end
 
   end
 
   describe "#touch_out" do
     it { is_expected.to respond_to :touch_out }
+
+    it "sets in_journey? to be false" do
+      subject.touch_in
+      subject.touch_out
+      expect(subject).not_to be_in_journey
+    end
   end
 
   describe "#in_journey?" do
 
     it { is_expected.to respond_to :in_journey? }
-  end
 
+    it "is initially not in a journey" do
+      expect(subject).not_to be_in_journey
+    end
   end
 
 end
