@@ -34,22 +34,23 @@ describe Oystercard do
 
 
 
-  describe '#deduct' do
+  # describe '#deduct' do
     
-    it {is_expected.to respond_to(:deduct).with(1).arguments}
+  #   it {is_expected.to respond_to(:deduct).with(1).arguments}
 
-    it "decreases balance" do
-      # subject.top_up(10)
-      deduction_amount = 1
-      expect{ subject.deduct(deduction_amount) }.to change{ subject.balance }.by(-deduction_amount)
-    end
-  end
+  #   it "decreases balance" do
+  #     # subject.top_up(10)
+  #     deduction_amount = 1
+  #     expect{ subject.deduct(deduction_amount) }.to change{ subject.balance }.by(-deduction_amount)
+  #   end
+  # end
    
   describe "#touch_in" do
 
     it { is_expected.to respond_to :touch_in }
 
     it "sets in_journey? to be true" do
+      subject.top_up(10)
       subject.touch_in
       expect(subject).to be_in_journey
     end
@@ -60,16 +61,18 @@ describe Oystercard do
     it { is_expected.to respond_to :touch_out }
 
     it "sets in_journey? to be false" do
+      subject.top_up(10)
       subject.touch_in
       subject.touch_out
+
       expect(subject).not_to be_in_journey
     end
     it "deducts the correct amount from card" do 
-      expect {subject.touch_out}.to change{subject.balance}.by(-4)
+     expect {subject.touch_out}.to change{subject.balance}.by(- Oystercard::FARE_PRICE)
   end
 end
 
-  end
+  
 
   describe "#in_journey?" do
 
@@ -79,5 +82,5 @@ end
       expect(subject).not_to be_in_journey
     end
   end
- 
+end
 
