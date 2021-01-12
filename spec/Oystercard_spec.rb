@@ -54,6 +54,10 @@ describe Oystercard do
       expect(subject).to be_in_journey
     end
 
+  it "does something" do
+  end
+
+
   end
 
   describe "#touch_out" do
