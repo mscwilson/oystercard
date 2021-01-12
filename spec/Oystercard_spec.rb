@@ -2,7 +2,8 @@ require "oystercard"
 
 describe Oystercard do
 
-  let(:station) { double :station }
+  let(:entry_station) {double :station}
+  let(:exit_station) { double :station }
 
   describe "#balance" do
 
@@ -54,31 +55,33 @@ describe Oystercard do
     it "sets in_journey? to be true" do
 
       subject.top_up(10)
-      subject.touch_in(station)
+      subject.touch_in(entry_station)
       expect(subject).to be_in_journey
     end
 
     it "remembers station" do
       subject.top_up(10)
-      subject.touch_in(station)
-      expect(subject.entry_station).to eq station
+      subject.touch_in(entry_station)
+      expect(subject.entry_station).to eq entry_station
     end
 
   end
 
   describe "#touch_out" do
-    it { is_expected.to respond_to :touch_out }
+    it { is_expected.to respond_to(:touch_out).with(1).arguments }
+    
+
 
     it "sets in_journey? to be false" do
       subject.top_up(10)
-      subject.touch_in(station)
-      subject.touch_out
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
 
       expect(subject).not_to be_in_journey
     end
 
     it "deducts the correct amount from card" do 
-     expect {subject.touch_out}.to change{subject.balance}.by(- Oystercard::FARE_PRICE)
+     expect {subject.touch_out(exit_station)}.to change{subject.balance}.by(- Oystercard::FARE_PRICE)
   end
 end
 
@@ -92,5 +95,21 @@ end
       expect(subject).not_to be_in_journey
     end
   end
+
+  it "shows previous trips" do
+    expect(subject).to respond_to :history 
+  end
+  it "has an epty list of journeys by default" do 
+    expect(subject.history).to be_empty
+  end
+let(:journey){ {entry_station: entry_station, exit_station: exit_station}}
+
+it 'stores a journey' do 
+  subject.top_up(10)
+  subject.touch_in(entry_station)
+  subject.touch_out(exit_station)
+  expect(subject.history).to include journey 
+end 
+
 end
 
