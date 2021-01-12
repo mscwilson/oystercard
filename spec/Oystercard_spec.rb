@@ -2,6 +2,8 @@ require "oystercard"
 
 describe Oystercard do
 
+  let(:station) { double :station }
+
   describe "#balance" do
 
     it "has balance of 0 on initializing" do
@@ -47,12 +49,19 @@ describe Oystercard do
    
   describe "#touch_in" do
 
-    it { is_expected.to respond_to :touch_in }
+    it { is_expected.to respond_to(:touch_in).with(1).arguments }
 
     it "sets in_journey? to be true" do
+
       subject.top_up(10)
-      subject.touch_in
+      subject.touch_in(station)
       expect(subject).to be_in_journey
+    end
+
+    it "remembers station" do
+      subject.top_up(10)
+      subject.touch_in(station)
+      expect(subject.entry_station).to eq station
     end
 
   end
@@ -62,11 +71,12 @@ describe Oystercard do
 
     it "sets in_journey? to be false" do
       subject.top_up(10)
-      subject.touch_in
+      subject.touch_in(station)
       subject.touch_out
 
       expect(subject).not_to be_in_journey
     end
+
     it "deducts the correct amount from card" do 
      expect {subject.touch_out}.to change{subject.balance}.by(- Oystercard::FARE_PRICE)
   end
