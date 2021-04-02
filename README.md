@@ -1,6 +1,10 @@
-# oystercard
+## Oystercard
 
-Here are the user stories for this project:
+The London Underground transport network uses a prepaid card system for access and payment. The cards are called Oystercards (as in the phrase "the world is your oyster"). As part of the [Makers Academy](https://makers.tech) coding bootcamp, we were challenged to create a command line Oystercard system as a way to learn TDD and practise pair programming. This was in week 2 of the 12 week course, so it's pretty simple.  
+
+### Description
+
+We were given these user stories:
 ```
 In order to use public transport
 As a customer
@@ -51,39 +55,20 @@ As a customer
 I need to have the correct fare calculated
 ```
 
-Goals: Set up the project:
+The majority of this repo was written using alternating pair programming. The other contributors were [RTurney](https://github.com/RTurney) and [MegGosnell](https://github.com/MegGosnell).  
 
-1.    Create a Gemfile
-2.    Create RSpec conventional files
-3.    Review debugging basics
+### Installation and Usage
 
-Create a basic Oyster card:
+To try out the project:
+* Make sure Ruby 2.7.2 and Bundler installed
+* Clone this repo
+* Navigate into the cloned folder
+* Run `bundle` to install rspec
+* Run `irb -r ./lib/oystercard`
+* Play with the code in the IRB REPL
+* To run the tests, exit from irb
+* Run `rspec`
+  
+Here's a screenshot of the code in action:  
+![oystercard in irb](oystercard.png)
 
-4.    Add the balance
-5.    Enable top up functionality
-6.    Enforce maximum balance
-7.    Deduct the money
-
-Add touch in/out functionality:
-
-8.    Add touch in/out support
-9.    Checking mininum balance on touch in
-10.   Charging for the journey
-
-Record the journeys
-
-11.   Saving the entry station
-12.   Adding journey history
-13.   Creating the station class
-
-Refactor to extract Journey class
-
-14.   Handling a journey without a touch out
-
-Refactoring: get the code into shape
-
-15.   Extracting the journey log out of the Oystercard
-
-Make fares depends on zones
-
-16.   Calculating the fare between zones
